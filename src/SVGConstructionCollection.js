@@ -10,21 +10,39 @@ export default class SVGConstructionCollection {
     // this.debug(fontData);
   }
 
+    getClean(){
+        var clean = {};
+        for(var mode in this.collection){
+            clean[mode] =  {}
+            for(var unicode in this.collection[mode]){
+                clean[mode][unicode] = {}
+                clean[mode][unicode].stringArray = this.collection[mode][unicode].stringArray;
+                clean[mode][unicode].viewBox = this.collection[mode][unicode].viewBox;
+            }
+        }
+        clean.radicals = {};
+        for(var unicode in this.radicals){
+            clean.radicals[unicode] = {};
+            clean.radicals[unicode].stringArray = this.radicals[unicode].stringArray;
+            clean.radicals[unicode].viewBox = this.radicals[unicode].viewBox;
+        }
+        return clean;
+    }
+
   generateRadicals(fontData) {
     var unicode = "8730";
     let radicalVariants =
       fontData.variants.vertical[unicode].MathGlyphVariantRecord;
-    let radicalArray = [];
+    let radicals = {}
     for (var variant of radicalVariants) {
-      radicalArray.push(
-        new GlyphRadical(
-          fontData.glyphNameToUnicode[variant.VariantGlyph.value],
+        let unicode = fontData.glyphNameToUnicode[variant.VariantGlyph.value];
+        radicals[unicode] = new GlyphRadical(
+            unicode,
           fontData
         )
-      );
     }
-    radicalArray.push(new ExtendableRadical(fontData));
-    return radicalArray;
+    radicals.extended = new ExtendableRadical(fontData);
+    return radicals;
   }
 
   debug(fontData) {

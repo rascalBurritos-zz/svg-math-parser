@@ -28,7 +28,7 @@ export default class ExtendableRadical {
       this.relative.commandArray
     );
 
-    this.baseViewBox = this.generateViewbox(
+    this.viewBox = this.generateViewbox(
       this.path.svgGlyphArray,
       this.ruleThickness
     );

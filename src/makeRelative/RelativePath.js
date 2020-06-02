@@ -1,4 +1,4 @@
-import ObjectHelpers from "../Helpers/ObjectHelpers";
+import ObjectHelpers from "../Helpers/ObjectHelpers.js";
 
 export default class RelativePath {
   constructor(commandArray, moveArray) {

@@ -1,4 +1,4 @@
-import { FontData } from "./FontData";
+import { FontData } from "./FontData.js";
 
 export default function fontFactory(fontMetric) {
   var options = {};

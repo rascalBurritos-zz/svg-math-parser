@@ -10,12 +10,12 @@ export default class ExtendableGlyph {
     let pathOperations = new PathOperations(glyphAssembly);
     this.viewBox = this.getBaseViewBox(pathOperations.usedSVGGlyphs);
     this.extendablePath = new ExtendablePath(pathOperations);
-    this.relativePath = new RelativePath(
+    let relativePath = new RelativePath(
       this.extendablePath.path.commandCollection.commands,
       this.extendablePath.path.move
     );
     this.stringArray = StringifyCommands.commandArrayToString(
-      this.relativePath.commandArray
+      relativePath.commandArray
     );
     // this.completePath = new Adjuster(this.stringArray, this.viewBox, 2000);
   }

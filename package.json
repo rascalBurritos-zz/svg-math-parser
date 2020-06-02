@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "svg-math-parser",
   "version": "1.0.0",
   "description": "",
@@ -8,10 +9,12 @@
     "build": "parcel build index.html"
   },
   "dependencies": {
+    "babel-cli": "^6.26.0",
     "lodash-es": "4.17.15"
   },
   "devDependencies": {
     "@babel/core": "7.2.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "parcel-bundler": "^1.6.1"
   },
   "keywords": []
