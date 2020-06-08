@@ -5,8 +5,7 @@
   "description": "",
   "main": "index.html",
   "scripts": {
-    "start": "parcel index.html --open",
-    "build": "parcel build index.html"
+    "build": "node src/index.js"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",

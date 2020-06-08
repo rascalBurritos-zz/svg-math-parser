@@ -1,4 +1,5 @@
 import { FontData } from "./FontData.js";
+import FontParser from "../Helpers/FontParser.js";
 
 export default function fontFactory(fontMetric) {
   var options = {};
@@ -36,7 +37,7 @@ export default function fontFactory(fontMetric) {
     icInfo.Coverage,
     icInfo.ItalicsCorrection,
     options.glyphNameToUnicode,
-    ele => parseInt(ele.Value.value, 10)
+    (ele) => parseInt(ele.Value.value, 10)
   );
   var mathVariants = fontMetric.FontMetric.MATH.MathVariants;
   options.variants = { vertical: {}, horizontal: {} };
@@ -44,7 +45,7 @@ export default function fontFactory(fontMetric) {
     mathVariants.VertGlyphCoverage,
     mathVariants.VertGlyphConstruction,
     options.glyphNameToUnicode,
-    ele => {
+    (ele) => {
       if (!Array.isArray(ele.MathGlyphVariantRecord)) {
         ele.MathGlyphVariantRecord = [ele.MathGlyphVariantRecord];
       }
@@ -55,14 +56,24 @@ export default function fontFactory(fontMetric) {
     mathVariants.HorizGlyphCoverage,
     mathVariants.HorizGlyphConstruction,
     options.glyphNameToUnicode,
-    ele => {
+    (ele) => {
       if (!Array.isArray(ele.MathGlyphVariantRecord)) {
         ele.MathGlyphVariantRecord = [ele.MathGlyphVariantRecord];
       }
       return ele;
     }
   );
-  return new FontData(options);
+  const fontAccentAttachment =
+    fontMetric.FontMetric.MATH.MathGlyphInfo.MathTopAccentAttachment;
+  options.accentAttachment = createUnicodeMap(
+    fontAccentAttachment.TopAccentCoverage,
+    fontAccentAttachment.TopAccentAttachment,
+    options.glyphNameToUnicode,
+    (ele) => {
+      return FontParser.parseValue(ele);
+    }
+  );
+  return options;
 }
 function createUnicodeMap(coverage, arrayMap, glyphNameToUnicode, myCallback) {
   var unicodeMap = {};
